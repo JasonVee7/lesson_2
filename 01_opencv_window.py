@@ -5,12 +5,13 @@ width = int(input("Enter window width: "))
 height = int(input("Enter window height: "))
 x_position = int(input("Enter starting X position: "))
 y_position = int(input("Enter starting Y position: "))
-print("Your customised window is ready!")
+
 
 # Create a frame window with custom parameters
 cv2.namedWindow('OpenCV Window', cv2.WINDOW_NORMAL)
 cv2.resizeWindow('OpenCV Window', width, height)
 cv2.moveWindow('OpenCV Window', x_position, y_position)
+print("Your customised window is ready!")
 
 # Set window properties to bring it to the front
 cv2.setWindowProperty('OpenCV Window', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
