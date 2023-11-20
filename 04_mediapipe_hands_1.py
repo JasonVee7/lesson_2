@@ -1,54 +1,39 @@
-import cv2 as cv
+import cv2
 import mediapipe as mp
-import pyautogui
-import threading
 
-def gesture_detection():
-    global y9, y12
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-        
-        rgb_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-        
-        results = hands.process(rgb_frame)
-        
-        if results.multi_hand_landmarks:
-            for hand_landmarks in results.multi_hand_landmarks:
-                for idx, landmark in enumerate(hand_landmarks.landmark):
-                    if idx == 9:
-                        x9, y9 = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
-                    elif idx == 12:
-                        x12, y12 = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
-
-# condition to go here!!!
-
-def display_frames():
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-     #      cv.imshow('Webcam', frame)
-
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            break
-
-cap = cv.VideoCapture(0)
+# Initialize MediaPipe Hands
 hands = mp.solutions.hands.Hands()
 
-y9, y12 = 0, 0
+# MediaPipe drawing utilities
+mp_drawing = mp.solutions.drawing_utils
 
-gesture_thread = threading.Thread(target=gesture_detection)
-display_thread = threading.Thread(target=display_frames)
+# OpenCV setup
+cap = cv2.VideoCapture(0)  # You can specify a different index if you have multiple cameras
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        print("Can't receive frame (stream end?). Exiting ...")
+        break
 
-gesture_thread.start()
-display_thread.start()
+    # Convert the image to RGB for MediaPipe
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    results = hands.process(rgb_frame)
 
-gesture_thread.join()
-display_thread.join()
+    # If hands are detected, draw landmarks on the frame
+    if results.multi_hand_landmarks:
+        for hand_landmarks in results.multi_hand_landmarks:
+            mp_drawing.draw_landmarks(
+                frame, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS)
 
+    # Show the frame with detections
+    cv2.imshow('Hand Tracking', frame)
+
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+# Release the VideoCapture and close the OpenCV windows
 cap.release()
-cv.destroyAllWindows()
+cv2.destroyAllWindows()
+
+
 
