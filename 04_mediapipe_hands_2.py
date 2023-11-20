@@ -19,11 +19,14 @@ while cap.isOpened():
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb_frame)
 
-    # If hands are detected, draw landmarks on the frame
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(
-                frame, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS)
+            for idx, landmark in enumerate(hand_landmarks.landmark):
+                if idx == 9:
+                    x9, y9 = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
+                elif idx == 12:
+                    x12, y12 = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
+
 
     # Show the frame with detections
     cv2.imshow('Hand Tracking', frame)
