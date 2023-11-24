@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import pyautogui
 
 # Initialize MediaPipe Hands
 hands = mp.solutions.hands.Hands()
@@ -34,8 +35,12 @@ while cap.isOpened():
                     cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)  # Draw a blue circle at landmark 12
                     point_12_y = y
 
-    if point_12_y < point_9_y:
-        print('print open hand!')
+    # Check if y-coordinate of point 12 is greater than point 9
+    if point_9_y is not None and point_12_y is not None:
+        if point_12_y < point_9_y:
+            print('Open hand!')
+            pyautogui.press('space')
+
 
     # Show the frame with detections
     cv2.imshow('Hand Tracking', frame)
