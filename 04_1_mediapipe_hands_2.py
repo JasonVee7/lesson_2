@@ -9,6 +9,8 @@ mp_drawing = mp.solutions.drawing_utils
 
 # OpenCV setup
 cap = cv2.VideoCapture(0)  # You can specify a different index if you have multiple cameras
+
+#Loop
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
