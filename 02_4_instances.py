@@ -6,7 +6,7 @@ print('test')
 # Initialise mediapipe objects
 hands = mp.solutions.hands.Hands()
 face = mp.solutions.face_mesh.FaceMesh()
-face_detection = mp.solutions.face_detection.FaceDetection()  # Corrected module name
+face_detection = mp.solutions.face_detection.FaceDetection() 
 pose = mp.solutions.pose.Pose()
 
 print(hands)
