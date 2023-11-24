@@ -10,7 +10,7 @@ mp_drawing = mp.solutions.drawing_utils
 # OpenCV setup
 cap = cv2.VideoCapture(0)  # You can specify a different index if you have multiple cameras
 
-#Loop
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -27,9 +27,11 @@ while cap.isOpened():
                 if idx == 9:
                     x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
                     cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)  # Draw a green circle at landmark 9
+                    print('9: ', y)
                 elif idx == 12:
                     x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
                     cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)  # Draw a blue circle at landmark 12
+                   # print('12: ', y)
 
     # Show the frame with detections
     cv2.imshow('Hand Tracking', frame)
@@ -40,6 +42,5 @@ while cap.isOpened():
 # Release the VideoCapture and close the OpenCV windows
 cap.release()
 cv2.destroyAllWindows()
-
 
 
