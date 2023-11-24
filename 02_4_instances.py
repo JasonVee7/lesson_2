@@ -1,4 +1,4 @@
-cv2 as cv
+import cv2 as cv
 import mediapipe as mp
 
 print('test')
