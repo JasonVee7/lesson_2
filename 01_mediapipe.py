@@ -4,8 +4,14 @@ import importlib
 try:
     import mediapipe as mp
     mediapipe_installed = True
+    mp_version = mp.__version__  # Get mediapipe version if installed
 except ImportError:
     mediapipe_installed = False
+    mp_version = None
+
+print('mediapipe installed:', mediapipe_installed)
+if mp_version:
+    print('mediapipe version:', mp_version)
 
 if not mediapipe_installed:
     print("mediapipe is not installed.")
@@ -20,6 +26,7 @@ if not mediapipe_installed:
             subprocess.run(["pip", "install", "mediapipe"])
             importlib.reload(mp)  # Reload the module to use the installed mediapipe
             print("mediapipe has been installed successfully.")
+            print('mediapipe version:', mp.__version__)  # Print the installed version
         except Exception as e:
             print("Error installing mediapipe:", e)
     else:
