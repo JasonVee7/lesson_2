@@ -29,14 +29,22 @@ while cap.isOpened():
                     x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
                     cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)  # Draw a green circle at landmark 9
                     point_9_y = y
+                    # Display the y coordinate of landmark 9 on the frame window
+                    cv2.putText(frame, f"y: {y}", (x + 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
                     
                 elif idx == 12:
                     x, y = int(landmark.x * frame.shape[1]), int(landmark.y * frame.shape[0])
                     cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)  # Draw a blue circle at landmark 12
                     point_12_y = y
-                   # print('12: ', y)
+                    # print('12: ', y)
+                    # Display the y coordinate of landmark 9 on the frame window
+                    cv2.putText(frame, f"y: {y}", (x + 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
 
         if point_12_y < point_9_y:
+            # Change background color to #445566
+            frame[:] = [169, 36, 60]  # BGR values of #445566
             print('Open hand!')
             print('12: ', point_12_y, '9: ',point_9_y )
             pyautogui.press('space')
@@ -51,6 +59,10 @@ while cap.isOpened():
 # Release the VideoCapture and close the OpenCV windows
 cap.release()
 cv2.destroyAllWindows()
+
+
+
+
 
 
 
