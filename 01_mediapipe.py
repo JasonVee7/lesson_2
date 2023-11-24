@@ -1,21 +1,30 @@
-import cv2 as cv
+import importlib
 
-# Open webcam
-cap = cv.VideoCapture(0)  # Use 0 for default webcam, or change to another number if you have multiple cameras
+# Check if mediapipe is installed
+try:
+    import mediapipe as mp
+    mediapipe_installed = True
+except ImportError:
+    mediapipe_installed = False
 
-while cap.isOpened():
-    # Read frames from the webcam
-    ret, frame = cap.read()
-    if not ret:
-        break
-    
-    # Display the frame in a window
-    cv.imshow('Webcam', frame)
+if not mediapipe_installed:
+    print("mediapipe is not installed.")
 
-    # Exit on pressing 'q'
-    if cv.waitKey(1) & 0xFF == ord('q'):
-        break
+    # Ask the user if they want to install mediapipe
+    user_input = input("Do you want to install mediapipe? (y/n): ")
 
-# Release the webcam and close all windows
-cap.release()
-cv.destroyAllWindows()
+    if user_input.lower() == 'y':
+        # Install mediapipe using pip
+        try:
+            import subprocess
+            subprocess.run(["pip", "install", "mediapipe"])
+            importlib.reload(mp)  # Reload the module to use the installed mediapipe
+            print("mediapipe has been installed successfully.")
+        except Exception as e:
+            print("Error installing mediapipe:", e)
+    else:
+        print("mediapipe installation skipped.")
+
+# Continue with your code after checking for mediapipe
+if mediapipe_installed:
+    print('test')
