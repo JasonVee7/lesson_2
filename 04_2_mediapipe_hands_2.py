@@ -46,7 +46,7 @@ while cap.isOpened():
             # Change background color to #445566
             frame[:] = [169, 36, 60]  # BGR values of #445566
             print('Open hand!')
-            print('12: ', point_12_y, '9: ',point_9_y )
+         #  print('12: ', point_12_y, '9: ',point_9_y )
             pyautogui.press('space')
 
 
